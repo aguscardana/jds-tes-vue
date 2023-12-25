@@ -8,26 +8,26 @@
                             Form Penerima Manfaat
                         </div>
                         <div class="card-body">
-                            <form @submit="onSubmit" class="row g-3">
+                            <form @submit="onSubmit" ref="penerima_manfaat" class="row g-3">
                                 <div class="form-group">
                                     <label class="form-label">Nama</label>
                                     <input type="text" class="form-control" v-model.trim="form.nama"
-                                    :state="validateState('nama')" :class="v$.form.nama.$error ? 'is-invalid' : ''">
+                                        :state="validateState('nama')" :class="v$.form.nama.$error ? 'is-invalid' : ''">
                                     <div v-for="error of v$.form.nama.$errors" class="invalid-feedback" :key="error.$uid">
                                         {{ error.$message }}
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Nomor Induk Kependudukan (NIK)</label>
-                                    <input type="number" class="form-control" v-model.number="form.nik"
-                                    :state="validateState('nik')" :class="v$.form.nik.$error ? 'is-invalid' : ''">
+                                    <input type="number" class="form-control" v-model.trim="form.nik"
+                                        :state="validateState('nik')" :class="v$.form.nik.$error ? 'is-invalid' : ''">
                                     <div v-for="error of v$.form.nik.$errors" class="invalid-feedback" :key="error.$uid">
                                         {{ error.$message }}
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Nomor Kartu Keluarga (KK)</label>
-                                    <input type="number" class="form-control" v-model.number="form.nomor_kk"
+                                    <input type="number" class="form-control" v-model.trim="form.nomor_kk"
                                         :state="validateState('nomor_kk')"
                                         :class="v$.form.nomor_kk.$error ? 'is-invalid' : ''">
                                     <div v-for="error of v$.form.nomor_kk.$errors" class="invalid-feedback"
@@ -37,8 +37,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Foto KTP</label>
-                                    <input type="file" id="image_ktp" ref="image_ktp" 
-                                    :state="validateState('image_ktp')"
+                                    <input type="file" id="image_ktp" ref="image_ktp" :state="validateState('image_ktp')"
                                         :class="v$.form.image_ktp.$error ? 'is-invalid' : ''" multiple accept="image/*"
                                         class="form-control">
                                     <div v-for="error of v$.form.image_ktp.$errors" class="invalid-feedback"
@@ -50,8 +49,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Foto Kartu Keluarga</label>
-                                    <input type="file" id="image_kk" ref="image_kk"
-                                        :state="validateState('image_kk')"
+                                    <input type="file" id="image_kk" ref="image_kk" :state="validateState('image_kk')"
                                         :class="v$.form.image_kk.$error ? 'is-invalid' : ''" multiple accept="image/*"
                                         class="form-control">
                                     <div v-for="error of v$.form.image_kk.$errors" class="invalid-feedback"
@@ -64,7 +62,7 @@
                                 <div class="form-group">
                                     <label class="form-label">Umur</label>
                                     <input type="number" step="1" class="form-control" v-model.number="form.umur"
-                                    :state="validateState('umur')" :class="v$.form.umur.$error ? 'is-invalid' : ''">
+                                        :state="validateState('umur')" :class="v$.form.umur.$error ? 'is-invalid' : ''">
                                     <div v-for="error of v$.form.umur.$errors" class="invalid-feedback" :key="error.$uid">
                                         {{ error.$message }}
                                     </div>
@@ -72,7 +70,7 @@
                                 <div class="form-group">
                                     <label class="form-label">Jenis Kelamin</label>
                                     <select v-model.trim="form.jenis_kelamin" class="form-control"
-                                    :state="validateState('jenis_kelamin')"
+                                        :state="validateState('jenis_kelamin')"
                                         :class="v$.form.jenis_kelamin.$error ? 'is-invalid' : ''">
                                         <option v-for="(option, index) in options" :key="index" :value="option.value">
                                             {{ option.label }}
@@ -85,31 +83,12 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Provinsi</label>
-                                    <!-- <div class="flex justify-content-center">
-                                        <Dropdown v-model.trim="form.provinsi" editable :options="listProvinsi"
-                                            @input="setTouched('provinsi')"
-                                            :class="v$.form.provinsi.$error ? 'is-invalid' : ''"
-                                            placeholder="Pilih provinsi" class="w-full md:w-12rem"
-                                            style="width: -webkit-fill-available;" />
-                                    </div>
-                                    test {{ info }}
-                                    <div v-for="error of v$.form.provinsi.$errors" class="invalid-feedback"
-                                        :key="error.$uid">
-                                        {{ error.$message }}
-                                    </div> -->
-                            
-                                    <select v-model="form.provinsi" 
-                                    @change="onChangeProvinsi" 
-                                    class="form-control"
-                                    :state="validateState('provinsi')"
-                                    :class="v$.form.provinsi.$error ? 'is-invalid' : ''">
+                                    <select v-model="form.provinsi" @change="onChangeProvinsi" class="form-control"
+                                        :state="validateState('provinsi')"
+                                        :class="v$.form.provinsi.$error ? 'is-invalid' : ''">
                                         <option value="">Pilih</option>
-                                        <option
-                                        v-for="(p, index) in listProvinsi"
-                                            :value="p.id"
-                                            :key="index"
-                                        >
-                                        {{ p.name }}
+                                        <option v-for="(p, index) in listProvinsi" :value="p.id" :key="index">
+                                            {{ p.name }}
                                         </option>
                                     </select>
                                     <div v-for="error of v$.form.provinsi.$errors" class="invalid-feedback"
@@ -119,18 +98,12 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Kab/Kota</label>
-                                    <select v-model.trim="form.kabupaten_kota" 
-                                    @change="onChangeKabupatenKota" 
-                                    class="form-control"
-                                    :state="validateState('kabupaten_kota')"
-                                    :class="v$.form.kabupaten_kota.$error ? 'is-invalid' : ''">
+                                    <select v-model.trim="form.kabupaten_kota" @change="onChangeKabupatenKota"
+                                        class="form-control" :state="validateState('kabupaten_kota')"
+                                        :class="v$.form.kabupaten_kota.$error ? 'is-invalid' : ''">
                                         <option value="">Pilih</option>
-                                        <option
-                                        v-for="(k, index) in listkabupatenKota"
-                                            :value="k.id"
-                                            :key="index"
-                                        >
-                                        {{ k.name }}
+                                        <option v-for="(k, index) in listkabupatenKota" :value="k.id" :key="index">
+                                            {{ k.name }}
                                         </option>
                                     </select>
                                     <div v-for="error of v$.form.kabupaten_kota.$errors" class="invalid-feedback"
@@ -140,18 +113,12 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Kecamatan</label>
-                                    <select v-model.trim="form.kecamatan" 
-                                    @change="onChangeKecamatan" 
-                                    class="form-control"
-                                    :state="validateState('kecamatan')"
-                                    :class="v$.form.kecamatan.$error ? 'is-invalid' : ''">
+                                    <select v-model.trim="form.kecamatan" @change="onChangeKecamatan" class="form-control"
+                                        :state="validateState('kecamatan')"
+                                        :class="v$.form.kecamatan.$error ? 'is-invalid' : ''">
                                         <option value="">Pilih</option>
-                                        <option
-                                        v-for="(k, index) in listKecamatan"
-                                            :value="k.id"
-                                            :key="index"
-                                        >
-                                        {{ k.name }}
+                                        <option v-for="(k, index) in listKecamatan" :value="k.id" :key="index">
+                                            {{ k.name }}
                                         </option>
                                     </select>
                                     <div v-for="error of v$.form.kecamatan.$errors" class="invalid-feedback"
@@ -161,17 +128,12 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Kelurahan/Desa</label>
-                                    <select v-model.trim="form.kelurahan_desa"
-                                    class="form-control"
-                                    :state="validateState('kelurahan_desa')"
-                                    :class="v$.form.kelurahan_desa.$error ? 'is-invalid' : ''">
+                                    <select v-model.trim="form.kelurahan_desa" class="form-control"
+                                        :state="validateState('kelurahan_desa')"
+                                        :class="v$.form.kelurahan_desa.$error ? 'is-invalid' : ''">
                                         <option value="">Pilih</option>
-                                        <option
-                                        v-for="(k, index) in listKelurahanDesa"
-                                            :value="k.id"
-                                            :key="index"
-                                        >
-                                        {{ k.name }}
+                                        <option v-for="(k, index) in listKelurahanDesa" :value="k.id" :key="index">
+                                            {{ k.name }}
                                         </option>
                                     </select>
                                     <div v-for="error of v$.form.kelurahan_desa.$errors" class="invalid-feedback"
@@ -182,7 +144,7 @@
                                 <div class="form-group">
                                     <label class="form-label">Alamat</label>
                                     <input type="text" class="form-control" v-model.trim="form.alamat"
-                                    :state="validateState('alamat')" :class="v$.form.alamat.$error ? 'is-invalid' : ''">
+                                        :state="validateState('alamat')" :class="v$.form.alamat.$error ? 'is-invalid' : ''">
                                     <div v-for="error of v$.form.alamat.$errors" class="invalid-feedback" :key="error.$uid">
                                         {{ error.$message }}
                                     </div>
@@ -190,7 +152,7 @@
                                 <div class="form-group">
                                     <label class="form-label">RT</label>
                                     <input type="text" class="form-control" v-model.trim="form.rt"
-                                    :state="validateState('rt')" :class="v$.form.rt.$error ? 'is-invalid' : ''">
+                                        :state="validateState('rt')" :class="v$.form.rt.$error ? 'is-invalid' : ''">
                                     <div v-for="error of v$.form.rt.$errors" class="invalid-feedback" :key="error.$uid">
                                         {{ error.$message }}
                                     </div>
@@ -198,7 +160,7 @@
                                 <div class="form-group">
                                     <label class="form-label">RW</label>
                                     <input type="text" class="form-control" v-model.trim="form.rw"
-                                    :state="validateState('rw')" :class="v$.form.rw.$error ? 'is-invalid' : ''">
+                                        :state="validateState('rw')" :class="v$.form.rw.$error ? 'is-invalid' : ''">
                                     <div v-for="error of v$.form.rw.$errors" class="invalid-feedback" :key="error.$uid">
                                         {{ error.$message }}
                                     </div>
@@ -206,39 +168,45 @@
                                 <div class="form-group">
                                     <label class="form-label">Penghasilan sebelum pandemi (Rp)</label>
                                     <input type="text" class="form-control" v-model.trim="form.revenue_before"
-                                    @input="handleInputRevenueBefore"
-                                    :state="validateState('revenue_before')" :class="v$.form.revenue_before.$error ? 'is-invalid' : ''">
-                                    <div v-for="error of v$.form.revenue_before.$errors" class="invalid-feedback" :key="error.$uid">
+                                        @input="handleInputRevenueBefore" :state="validateState('revenue_before')"
+                                        :class="v$.form.revenue_before.$error ? 'is-invalid' : ''">
+                                    <div v-for="error of v$.form.revenue_before.$errors" class="invalid-feedback"
+                                        :key="error.$uid">
                                         {{ error.$message }}
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Penghasilan sesudah pandemi (Rp)</label>
                                     <input type="text" class="form-control" v-model.trim="form.revenue_after"
-                                    @input="handleInputRevenueAfter"
-                                    :state="validateState('revenue_after')" :class="v$.form.revenue_after.$error ? 'is-invalid' : ''">
-                                    <div v-for="error of v$.form.revenue_after.$errors" class="invalid-feedback" :key="error.$uid">
+                                        @input="handleInputRevenueAfter" :state="validateState('revenue_after')"
+                                        :class="v$.form.revenue_after.$error ? 'is-invalid' : ''">
+                                    <div v-for="error of v$.form.revenue_after.$errors" class="invalid-feedback"
+                                        :key="error.$uid">
                                         {{ error.$message }}
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Alasan membutuhkan bantuan</label>
                                     <textarea class="form-control" v-model.trim="form.alasan_penerima_manfaat"
-                                    :state="validateState('alasan_penerima_manfaat')" :class="v$.form.alasan_penerima_manfaat.$error ? 'is-invalid' : ''"></textarea>
-                                    <div v-for="error of v$.form.alasan_penerima_manfaat.$errors" class="invalid-feedback" :key="error.$uid">
+                                        :state="validateState('alasan_penerima_manfaat')"
+                                        :class="v$.form.alasan_penerima_manfaat.$error ? 'is-invalid' : ''"></textarea>
+                                    <div v-for="error of v$.form.alasan_penerima_manfaat.$errors" class="invalid-feedback"
+                                        :key="error.$uid">
                                         {{ error.$message }}
                                     </div>
                                 </div>
                                 <div class="form-check" style="margin-top: 3%;">
-                                <input class="form-check-input" type="checkbox" v-model="approval" id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">
-                                    Saya menyatakan bahwa data yang diisikan adalah benar dan siap mempertanggungjawabkan apabila ditemukan ketidaksesuaian dalam data tersebut.
-                                </label>
+                                    <input class="form-check-input" type="checkbox" v-model="form.approval"
+                                        id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        Saya menyatakan bahwa data yang diisikan adalah benar dan siap
+                                        mempertanggungjawabkan apabila ditemukan ketidaksesuaian dalam data tersebut.
+                                    </label>
                                 </div>
                                 <div class="form-group">
-                                    <button class="btn btn-primary" type="submit">Simpan</button>
-                                    <button type="reset" class="btn btn-md btn-danger">Reset</button>
-                                </div>                           
+                                    <button class="btn btn-primary" type="submit">Simpan</button>&nbsp;
+                                    <router-link :class="['btn btn-md btn-danger']" to="/">Kembali</router-link>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -250,13 +218,9 @@
 
 <script>
 import axios from 'axios'
-// import { ref, onMounted } from 'vue';
 import useVuelidate from '@vuelidate/core';
 import { required, maxLength, numeric, helpers, minValue } from '@vuelidate/validators';
-// import { Dropdown } from 'primevue/dropdown';
-import "primevue/resources/themes/lara-light-green/theme.css";
-import "primevue/resources/primevue.min.css";
-
+import swal from 'sweetalert';
 
 export default {
     name: 'App',
@@ -268,9 +232,10 @@ export default {
     data() {
         return {
             form: {
+                id: null,
                 nama: '',
-                nik: null,
-                nomor_kk: null,
+                nik: '',
+                nomor_kk: '',
                 image_ktp: '',
                 image_kk: '',
                 umur: null,
@@ -282,8 +247,8 @@ export default {
                 alamat: '',
                 rt: '',
                 rw: '',
-                revenue_before: null,
-                revenue_after: null,
+                revenue_before: '',
+                revenue_after: '',
                 alasan_penerima_manfaat: '',
                 approval: null,
             },
@@ -291,7 +256,7 @@ export default {
             listkabupatenKota: [],
             listKecamatan: [],
             listKelurahanDesa: [],
-            
+
             sizeImageKTP: false,
             sizeImageKK: false,
             options: [
@@ -299,6 +264,8 @@ export default {
                 { value: 'pria', label: 'Pria' },
                 { value: 'wanita', label: 'Wanita' }
             ],
+            savingSuccessful: false,
+            message: ''
         }
     },
     created() {
@@ -366,7 +333,7 @@ export default {
         }
     },
     methods: {
-         convertToRupiah(angka, prefix) {
+        convertToRupiah(angka, prefix) {
             const number_string = angka.replace(/[^,\d]/g, "").toString();
             const split = number_string.split(",");
             const sisa = split[0].length % 3;
@@ -374,8 +341,8 @@ export default {
             const ribuan = split[0].substr(sisa).match(/\d{3}/gi);
 
             if (ribuan) {
-            const separator = sisa ? "." : "";
-            rupiah += separator + ribuan.join(".");
+                const separator = sisa ? "." : "";
+                rupiah += separator + ribuan.join(".");
             }
 
             rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
@@ -392,6 +359,7 @@ export default {
             return $dirty ? !$error : null;
         },
         loadProvinsi() {
+            this.form.provinsi = '';
             axios
                 .get("https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json", {
                     headers: {
@@ -402,7 +370,7 @@ export default {
                     this.listProvinsi = res.data;
                 });
         },
-        onChangeProvinsi() {    
+        onChangeProvinsi() {
             if (this.form.provinsi === '') {
                 this.form.kabupaten_kota = '';
                 this.listkabupatenKota = [];
@@ -421,14 +389,14 @@ export default {
                 this.listKelurahanDesa = [];
 
                 axios
-                .get("https://www.emsifa.com/api-wilayah-indonesia/api/regencies/"+ this.form.provinsi +".json", {
-                    headers: {
-                        Accept: "application/json",
-                    },
-                })
-                .then((res) => {
-                    this.listkabupatenKota = res.data;
-                });
+                    .get("https://www.emsifa.com/api-wilayah-indonesia/api/regencies/" + this.form.provinsi + ".json", {
+                        headers: {
+                            Accept: "application/json",
+                        },
+                    })
+                    .then((res) => {
+                        this.listkabupatenKota = res.data;
+                    });
             }
         },
         onChangeKabupatenKota() {
@@ -443,14 +411,14 @@ export default {
                 this.form.kelurahan_desa = '';
                 this.listKelurahanDesa = [];
                 axios
-                .get("https://www.emsifa.com/api-wilayah-indonesia/api/districts/"+ this.form.kabupaten_kota +".json", {
-                    headers: {
-                        Accept: "application/json",
-                    },
-                })
-                .then((res) => {
-                    this.listKecamatan = res.data;
-                });
+                    .get("https://www.emsifa.com/api-wilayah-indonesia/api/districts/" + this.form.kabupaten_kota + ".json", {
+                        headers: {
+                            Accept: "application/json",
+                        },
+                    })
+                    .then((res) => {
+                        this.listKecamatan = res.data;
+                    });
             }
         },
         onChangeKecamatan() {
@@ -463,28 +431,23 @@ export default {
                 this.form.kelurahan_desa = '';
                 this.listKelurahanDesa = [];
                 axios
-                .get("https://www.emsifa.com/api-wilayah-indonesia/api/villages/"+ this.form.kecamatan +".json", {
-                    headers: {
-                        Accept: "application/json",
-                    },
-                })
-                .then((res) => {
-                    this.listKelurahanDesa = res.data;
-                });
+                    .get("https://www.emsifa.com/api-wilayah-indonesia/api/villages/" + this.form.kecamatan + ".json", {
+                        headers: {
+                            Accept: "application/json",
+                        },
+                    })
+                    .then((res) => {
+                        this.listKelurahanDesa = res.data;
+                    });
             }
         },
         async onSubmit(event) {
             event.preventDefault();
             const fileKTP = this.$refs.image_ktp.files[0];
             const fileKK = this.$refs.image_kk.files[0];
-            //this.setTouched('all');
-
-            this.v$.form.$touch();
-            if (this.v$.form.$anyError) {
-                return;
-            }
 
             if (fileKTP !== undefined) {
+                this.form.image_ktp = fileKTP.name;
                 const element = document.getElementById('image_ktp');
                 element.classList.remove('is-invalid');
                 if (fileKTP.size > 2 * 1024 * 1024) {
@@ -497,6 +460,7 @@ export default {
             }
 
             if (fileKK !== undefined) {
+                this.form.image_kk = fileKK.name;
                 const element = document.getElementById('image_kk');
                 element.classList.remove('is-invalid');
                 if (fileKK.size > 2 * 1024 * 1024) {
@@ -510,29 +474,38 @@ export default {
 
             this.sizeImageKTP = false;
             this.sizeImageKK = false;
-            if (!this.v$.$invalid) {
-                axios.post('http://localhost:8000/posts', this.post)
-                    .then((response) => {
-                        this.$router.push({
-                            name: 'posts'
+            this.v$.form.$touch();
+
+            if (!this.v$.form.$invalid) { 
+                if (this.form.approval !== null) {
+                    await axios.post(`http://localhost:3001/penerima_manfaat`, this.form).then(() => {
+            
+                        swal({
+                            title: "Sukses",
+                            text: "Data penerima manfaat berhasil disimpan!",
+                            icon: "success",
+                            button: "OK!",
                         });
-                        console.log(response.data.data);
+
+                        this.form = {}
+                        this.listProvinsi = []
+                        this.listkabupatenKota = []
+                        this.listKecamatan = []
+                        this.listKelurahanDesa = []
+                        setTimeout(() => { this.v$.$reset() }, 0)
+                        this.$refs.penerima_manfaat.reset();
+                        
                     }).catch(error => {
-                        this.validation = error.response.data.data;
+                        console.log(error);
+                        swal("Perhatian...", "Gagal menyimpan data!");
                     });
+                } else {
+                    swal("Perhatian...", "Mohon untuk mengisi pernyataan kesediaan!");
+                }
+            } else {
+                swal("Perhatian...", "Mohon untuk mengisi form dengan lengkap!");
             }
-        },
-        // setTouched(theModel) {
-        //     if (theModel == 'nama' || theModel == 'all') { this.v$.form.nama.$touch() }
-        //     if (theModel == 'nik' || theModel == 'all') { this.v$.form.nik.$touch() }
-        //     if (theModel == 'nomor_kk' || theModel == 'all') { this.v$.form.nomor_kk.$touch() }
-        //     if (theModel == 'image_ktp' || theModel == 'all') { this.v$.form.image_ktp.$touch() }
-        //     if (theModel == 'image_kk' || theModel == 'all') { this.v$.form.image_kk.$touch() }
-        //     if (theModel == 'umur' || theModel == 'all') { this.v$.form.umur.$touch() }
-        //     //if (theModel == 'jenis_kelamin') { this.v$.form.jenis_kelamin.$touch() }
-        //     // if (theModel == 'provinsi' || theModel == 'all') { this.v$.provinsi.$touch() }
-        //     // if (theModel == 'kabupaten_kota' || theModel == 'all') { this.v$.kabupaten_kota.$touch() }
-        // },
+        }
     }
 }
 </script>

@@ -34,11 +34,11 @@
                       <td>{{ post.alamat }}</td>
                       <td>{{ post.revenue_before }}</td>
                       <td>{{ post.revenue_after }}</td>
-                      <td class="text-center">
-                        <router-link :to="{ name: 'edit', params: { id: post.id } }"
+                      <!-- <td class="text-center">
+                        <router-link :to="{ penerima_manfaat : 'edit', params: { penerima_manfaat : post.id } }"
                           class="btn btn-sm btn-primary mr-2">Edit</router-link>
                         <button @click.prevent="PostDelete(post.id)" class="btn btn-sm btn-danger">Hapus</button>
-                      </td>
+                      </td> -->
                     </tr>
                   </tbody>
                 </table>
@@ -53,7 +53,7 @@
   
 <script>
 import DataService from "../services/DataServices";
-
+import axios from 'axios'
 export default ({
   name: "penerima-manfaat-list",
   data() {
@@ -76,68 +76,38 @@ export default ({
       DataService.getAll()
         .then((response) => {
           this.penerimaManfaats = response.data.map(this.getDisplayPenerimaManfaat);
-          console.log(response.data);
+          //console.log(response.data);
         })
         .catch((e) => {
           console.log(e);
         });
     },
 
-    refreshList() {
-      this.retrievePenerimaManfaat();
-    },
-
-    removeAllPenerimaManfaat() {
-      DataService.deleteAll()
-        .then((response) => {
-          console.log(response.data);
-          this.refreshList();
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    },
-
-    searchNama() {
-      DataService.findByNama(this.nama)
-        .then((response) => {
-          this.penerimaManfaats = response.data.map(this.getDisplayPenerimaManfaat);
-          console.log(response.data);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    },
-
-    editPenerimaManfaat(id) {
-      this.$router.push({ name: "penerima-manfaat-details", params: { id: id } });
-    },
-
-    deletePenerimaManfaat(id) {
-      DataService.delete(id)
-        .then(() => {
-          this.refreshList();
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+    async fetchApi() {
+      return axios.get('https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json',{
+          headers: {
+              Accept: "application/json",
+          }
+      })
+      .then(response => { return response.data});
     },
 
     getDisplayPenerimaManfaat(pm) {
-      return {
-        id: pm.id,
-        nama: pm.nama.length > 30 ? pm.nama.substr(0, 30) + "..." : pm.nama,
-        nik: pm.nik,
-        Umur: pm.umur,
-        jenis_kelamin: pm.jenis_kelamin,
-        alamat: pm.alamat.length > 30 ? pm.alamat.substr(0, 30) + "..." : pm.alamat,
-        revenue_before: pm.revenue_before,
-        revenue_after: pm.revenue_after,
-      };
+        return {
+          id: pm.id,
+          nama: pm.nama.length > 30 ? pm.nama.substr(0, 30) + "..." : pm.nama,
+          nik: pm.nik,
+          umur: pm.umur,
+          jenis_kelamin: pm.jenis_kelamin,
+          alamat: pm.alamat,
+          revenue_before: "Rp. " + pm.revenue_before,
+          revenue_after: "Rp. " + pm.revenue_after,
+        }
     },
   },
   mounted() {
     this.retrievePenerimaManfaat();
+    this.fetchApi(); 
   },
 });
 </script>

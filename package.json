@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "db:serve": "json-server --watch db.json --port=3001",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
@@ -14,7 +15,8 @@
     "bootstrap": "^5.3.2",
     "bootstrap-vue": "^2.23.1",
     "core-js": "^3.8.3",
-    "primevue": "^3.44.0",
+    "json-server": "^0.17.4",
+    "sweetalert": "^2.1.2",
     "vue": "^3.3.12",
     "vue-axios": "^3.5.2",
     "vue-router": "^4.2.5"

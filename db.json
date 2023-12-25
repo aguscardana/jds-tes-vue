@@ -1,0 +1,46 @@
+{
+  "penerima_manfaat": [
+    {
+      "id": 1,
+      "nama": "Dedi mulayana",
+      "nik": "1234567890123456",
+      "nomor_kk": "1234567890",
+      "image_ktp": "image_kk_tes.jpg",
+      "image_kk": "image_kk_tes.jpg",
+      "umur": 45,
+      "jenis_kelamin": "Pria",
+      "provinsi": "14",
+      "kabupaten_kota": "1406",
+      "kecamatan": "1406014",
+      "kelurahan_desa": "1406014007",
+      "alamat": "Jl. Harso no 5",
+      "rt": "02",
+      "rw": "07",
+      "revenue_before": "5.000.000",
+      "revenue_after": "2.000.000",
+      "alasan_penerima_manfaat": "Kebutuhan ekonomi",
+      "approval": true
+    },
+    {
+      "id": 2,
+      "nama": "Diki Kurnia",
+      "nik": 3333323423422342,
+      "nomor_kk": 2342342344234,
+      "image_ktp": "20161105_123119.jpg",
+      "image_kk": "20161105_123119.jpg",
+      "umur": 34,
+      "jenis_kelamin": "pria",
+      "provinsi": "13",
+      "kabupaten_kota": "1302",
+      "kecamatan": "1302020",
+      "kelurahan_desa": "1302020005",
+      "alamat": "Jl. cifor n32",
+      "rt": "2",
+      "rw": "3",
+      "revenue_before": "20.000.000",
+      "revenue_after": "5.000.000",
+      "alasan_penerima_manfaat": "tes",
+      "approval": true
+    }
+  ]
+}
